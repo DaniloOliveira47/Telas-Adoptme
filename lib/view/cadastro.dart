@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/view/login.dart';
 
 class Cadastro extends StatelessWidget {
   const Cadastro({super.key});
@@ -240,22 +241,27 @@ class Cadastro extends StatelessWidget {
             top: 760,
             left: 65,
             child: Center(
-              child: Container(
-                width: 290,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 160, 160, 160)),
-                  borderRadius: BorderRadius.circular(40),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "Sign in",
-                      style: TextStyle(
-                          fontSize: 23,
-                          color: const Color.fromARGB(255, 145, 104, 104)),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                },
+                child: Container(
+                  width: 290,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 160, 160, 160)),
+                    borderRadius: BorderRadius.circular(40),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        "Sign in",
+                        style: TextStyle(
+                            fontSize: 23,
+                            color: const Color.fromARGB(255, 145, 104, 104)),
+                      ),
                     ),
                   ),
                 ),

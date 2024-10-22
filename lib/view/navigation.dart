@@ -1,35 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:project/view/cadastroPet.dart';
+import 'package:project/view/favoritos.dart';
 import 'package:project/view/home.dart';
+import 'package:project/view/message.dart';
 import 'package:project/view/usuario.dart';
 
-class BottomNavigationBarExample extends StatefulWidget {
-  const BottomNavigationBarExample({super.key});
+class controleTelas extends StatefulWidget {
+  const controleTelas({super.key});
 
   @override
-  State<BottomNavigationBarExample> createState() =>
-      _BottomNavigationBarExampleState();
+  State<controleTelas> createState() => _BottomNavigationBarExampleState();
 }
 
-class _BottomNavigationBarExampleState
-    extends State<BottomNavigationBarExample> {
+class _BottomNavigationBarExampleState extends State<controleTelas> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Usuario()
+  static List<Widget> _widgetOptions = <Widget>[
+    const Home(),
+    const Favoritos(),
+    const CadastrarPet(),
+    MessagesScreen(),
+    const Usuario()
   ];
 
   void _onItemTapped(int index) {
@@ -81,9 +73,9 @@ class _BottomNavigationBarExampleState
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.amber[800],
-            backgroundColor: Color.fromARGB(255, 229, 232, 240), 
+            backgroundColor: Color.fromARGB(255, 229, 232, 240),
             onTap: _onItemTapped,
-            type: BottomNavigationBarType.fixed, 
+            type: BottomNavigationBarType.fixed,
           ),
         ),
       ),

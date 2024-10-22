@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project/view/cadastro.dart';
+import 'package:project/view/navigation.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -157,21 +159,26 @@ class Login extends StatelessWidget {
                             Padding(
                               padding:
                                   const EdgeInsets.only(top: 28, bottom:12),
-                              child: Container(
-                                width: 200,
-                                decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 250, 136, 29),
-                                    borderRadius: BorderRadius.circular(40)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Center(
-                                    child: Text(
-                                      "Sign In",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: ('Baloo_Thambi_2'),
-                                          fontSize: 27),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => controleTelas()));
+                                },
+                                child: Container(
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                      color:
+                                          const Color.fromARGB(255, 250, 136, 29),
+                                      borderRadius: BorderRadius.circular(40)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Center(
+                                      child: Text(
+                                        "Sign In",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: ('Baloo_Thambi_2'),
+                                            fontSize: 27),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -196,23 +203,28 @@ class Login extends StatelessWidget {
           Positioned(
             top: 760,
             left: 65,
-            child: Center(
-              child: Container(
-                width: 290,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 160, 160, 160)),
-                  borderRadius: BorderRadius.circular(40),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "Register",
-                      style: TextStyle(
-                          fontSize: 23,
-                          color: const Color.fromARGB(255, 145, 104, 104)),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Cadastro()));
+              },
+              child: Center(
+                child: Container(
+                  width: 290,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 160, 160, 160)),
+                    borderRadius: BorderRadius.circular(40),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                            fontSize: 23,
+                            color: const Color.fromARGB(255, 145, 104, 104)),
+                      ),
                     ),
                   ),
                 ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project/view/detalhes.dart';
 import 'package:project/widgets/cardPet.dart';
+
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -13,10 +15,12 @@ class Home extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    color: Color(0xffE9ECF4),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30))),
+                  color: Color(0xffE9ECF4),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  ),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(
                       top: 30, bottom: 20, left: 23, right: 23),
@@ -38,14 +42,15 @@ class Home extends StatelessWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(40)),
                             child: Center(
-                                child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Image.asset(
-                                "assets/images/Mulher.png",
-                                height: 40,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Image.asset(
+                                  "assets/images/Mulher.png",
+                                  height: 40,
+                                ),
                               ),
-                            )),
-                          )
+                            ),
+                          ),
                         ],
                       ),
                       Padding(
@@ -221,7 +226,26 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 14, right: 14),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [cardPet(), cardPet()],
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Detalhes()),
+                        );
+                      },
+                      child: cardPet(),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Detalhes()),
+                        );
+                      },
+                      child: cardPet(),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -229,9 +253,24 @@ class Home extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    cardPet(),
-                    
-                    cardPet(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Detalhes()),
+                        );
+                      },
+                      child: cardPet(),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Detalhes()),
+                        );
+                      },
+                      child: cardPet(),
+                    ),
                   ],
                 ),
               ),
@@ -241,9 +280,10 @@ class Home extends StatelessWidget {
             top: 35,
             left: 178,
             child: Container(
-                width: 40,
-                height: 40,
-                child: Image.asset("assets/images/coracao.png")),
+              width: 40,
+              height: 40,
+              child: Image.asset("assets/images/coracao.png"),
+            ),
           ),
         ],
       ),
