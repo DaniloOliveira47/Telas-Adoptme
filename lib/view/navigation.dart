@@ -5,14 +5,14 @@ import 'package:project/view/home.dart';
 import 'package:project/view/message.dart';
 import 'package:project/view/usuario.dart';
 
-class controleTelas extends StatefulWidget {
-  const controleTelas({super.key});
+class ControleTelas extends StatefulWidget {
+  const ControleTelas({super.key});
 
   @override
-  State<controleTelas> createState() => _BottomNavigationBarExampleState();
+  State<ControleTelas> createState() => _BottomNavigationBarExampleState();
 }
 
-class _BottomNavigationBarExampleState extends State<controleTelas> {
+class _BottomNavigationBarExampleState extends State<ControleTelas> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -21,7 +21,7 @@ class _BottomNavigationBarExampleState extends State<controleTelas> {
     const Favoritos(),
     const CadastrarPet(),
     MessagesScreen(),
-    const Usuario()
+    const Usuarios()
   ];
 
   void _onItemTapped(int index) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Usuario extends StatelessWidget {
-  const Usuario({super.key});
+class Usuarios extends StatelessWidget {
+  const Usuarios({super.key});
 
   @override
   Widget build(BuildContext context) {

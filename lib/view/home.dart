@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project/model/Pet.dart';
+import 'package:project/service/ServicePet.dart';
 import 'package:project/view/detalhes.dart';
 import 'package:project/widgets/cardPet.dart';
-
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -29,10 +30,7 @@ class Home extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.menu,
-                            size: 45,
-                          ),
+                          Icon(Icons.menu, size: 45),
                           Image.asset(
                             "assets/images/Mypet.png",
                             height: 40,
@@ -222,56 +220,59 @@ class Home extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 14, right: 14),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Detalhes()),
-                        );
-                      },
-                      child: cardPet(),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Detalhes()),
-                        );
-                      },
-                      child: cardPet(),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Detalhes()),
-                        );
-                      },
-                      child: cardPet(),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Detalhes()),
-                        );
-                      },
-                      child: cardPet(),
-                    ),
-                  ],
+              Expanded(
+                child: FutureBuilder<List<Pet>>(
+                  future: PetService.fetchPets(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(
+                          child: Text('Error: ${snapshot.error.toString()}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(child: Text('No pets available'));
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.all(14),
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 3 / 4,
+                          ),
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final pet = snapshot.data![index];
+                            try {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Detalhes(pet: pet),
+                                    ),
+                                  );
+                                },
+                                child: cardPet(
+                                  name: pet.name,
+                                  breed: pet.color,
+                                  imageUrl: pet.images.isNotEmpty
+                                      ? pet.images.first
+                                      : '',
+                                ),
+                              );
+                            } catch (e) {
+                              debugPrint('Erro ao renderizar card: $e');
+                              return SizedBox
+                                  .shrink(); 
+                            }
+                          },
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project/model/Pet.dart';
 
 class Detalhes extends StatelessWidget {
-  const Detalhes({super.key});
+  const Detalhes({super.key, required Pet pet});
 
   @override
   Widget build(BuildContext context) {

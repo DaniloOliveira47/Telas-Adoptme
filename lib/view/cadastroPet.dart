@@ -1,22 +1,116 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CadastrarPet extends StatelessWidget {
+class CadastrarPet extends StatefulWidget {
   const CadastrarPet({super.key});
+
+  @override
+  _CadastrarPetState createState() => _CadastrarPetState();
+}
+
+class _CadastrarPetState extends State<CadastrarPet> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _colorController = TextEditingController();
+  final TextEditingController _imageController = TextEditingController();
+
+  Future<void> _registerPet() async {
+    final String name = _nameController.text;
+    final String age = _ageController.text;
+    final String weight = _weightController.text;
+    final String color = _colorController.text;
+    final String image = _imageController.text;
+
+    if (name.isEmpty ||
+        age.isEmpty ||
+        weight.isEmpty ||
+        color.isEmpty ||
+        image.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por favor, preencha todos os campos')),
+      );
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('authToken');
+    if (token == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content:
+                Text('Erro: token não encontrado. Faça o login novamente.')),
+      );
+      return;
+    }
+
+    final Map<String, dynamic> petData = {
+      'name': name,
+      'age': age,
+      'weight': weight,
+      'color': color,
+      'images': [image],
+    };
+
+    final Uri url =
+        Uri.parse('https://pet-adopt-dq32j.ondigitalocean.app/pet/create');
+
+    try {
+      final http.Response response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(petData),
+      );
+
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        try {
+          final responseData = jsonDecode(response.body);
+          print('Response Data: $responseData');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text(
+                    responseData['message'] ?? 'Pet registrado com sucesso')),
+          );
+        } catch (e) {
+          print('Erro ao decodificar a resposta: $e');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Erro ao processar a resposta')),
+          );
+        }
+      } else {
+        final responseBody =
+            response.body.isEmpty ? 'Sem resposta do servidor' : response.body;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro: $responseBody')),
+        );
+      }
+    } catch (e) {
+      print('Erro ao registrar pet: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Ocorreu um erro: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 243, 175, 175).withOpacity(0.9), 
-              ),
-            ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: const Color.fromARGB(0, 243, 175, 175).withOpacity(0.9),
           ),
-          Positioned(
+           Positioned(
             top: 0,
             child: Image.asset(
               "assets/images/Patas.png",
@@ -24,15 +118,7 @@ class CadastrarPet extends StatelessWidget {
               height: 100,
             ),
           ),
-          Positioned(
-            top: 30,
-            left: 145,
-            child: Image.asset(
-              "assets/images/coracao.png",
-              width: 100,
-              height: 100,
-            ),
-          ),
+          
           Positioned(
             top: 0,
             right: 10,
@@ -96,16 +182,27 @@ class CadastrarPet extends StatelessWidget {
               height: 100,
             ),
           ),
-          // Conteúdo principal
+          Positioned(
+            top: 115,
+            left: 145,
+            child: Image.asset(
+              "assets/images/coracao.png",
+              width: 100,
+              height: 100,
+            ),
+          ),
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(child: Image.asset("assets/images/Mypet.png")),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 80),
+                    child: Center(child: Image.asset("assets/images/Mypet.png")),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Color.fromARGB(255, 141, 81, 91),
@@ -124,133 +221,12 @@ class CadastrarPet extends StatelessWidget {
                                 fontFamily: 'Baloo_Thambi_2',
                               ),
                             ),
+                            ..._buildFormFields(),
                             Padding(
-                              padding: const EdgeInsets.only(top: 25),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontFamily: ('Baloo_Thambi_2'),
-                                    fontSize: 20,
-                                  ),
-                                  fillColor: const Color(0xffEFEFEF),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  hintText: 'Pet Name',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontFamily: ('Baloo_Thambi_2'),
-                                    fontSize: 20,
-                                  ),
-                                  fillColor: const Color(0xffEFEFEF),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  hintText: 'Age',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontFamily: ('Baloo_Thambi_2'),
-                                    fontSize: 20,
-                                  ),
-                                  fillColor: const Color(0xffEFEFEF),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  hintText: 'Sex',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontFamily: ('Baloo_Thambi_2'),
-                                    fontSize: 20,
-                                  ),
-                                  fillColor: const Color(0xffEFEFEF),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  hintText: 'Color',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontFamily: ('Baloo_Thambi_2'),
-                                    fontSize: 20,
-                                  ),
-                                  fillColor: const Color(0xffEFEFEF),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  hintText: 'Weight',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: TextField(
-                                maxLines: 4,
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontFamily: ('Baloo_Thambi_2'),
-                                    fontSize: 20,
-                                  ),
-                                  fillColor: const Color(0xffEFEFEF),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  hintText: 'Description',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20, bottom: 8),
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 8),
                               child: GestureDetector(
-                                onTap: () {
-                                 
-                                },
+                                onTap: _registerPet,
                                 child: Container(
                                   width: 250,
                                   height: 60,
@@ -269,7 +245,8 @@ class CadastrarPet extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      "Put Up for Adoption", textAlign: TextAlign.center,
+                                      "Put Up for Adoption",
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'Baloo_Thambi_2',
@@ -291,6 +268,40 @@ class CadastrarPet extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  List<Widget> _buildFormFields() {
+    return [
+      _buildTextField(_nameController, 'Name'),
+      _buildTextField(_ageController, 'Age'),
+      _buildTextField(_colorController, 'Color'),
+      _buildTextField(_weightController, 'Weight'),
+      _buildTextField(_imageController, 'Image URL'),
+    ];
+  }
+
+  Widget _buildTextField(TextEditingController controller, String hintText) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: TextField(
+        controller: controller,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          filled: true,
+          hintStyle: TextStyle(
+            color: Colors.grey.shade600,
+            fontFamily: 'Baloo_Thambi_2',
+            fontSize: 20,
+          ),
+          fillColor: const Color(0xffEFEFEF),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          hintText: hintText,
+        ),
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project/view/cadastro.dart';
+import 'package:project/view/cadastroPet.dart';
 import 'package:project/view/detalhes.dart';
 import 'package:project/view/favoritos.dart';
+import 'package:project/view/home.dart';
 import 'package:project/view/login.dart';
 import 'package:project/view/message.dart';
 import 'package:project/view/navigation.dart';
@@ -18,12 +20,15 @@ class MyApp extends StatelessWidget {
   
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,          
+      
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Login(),
+      home: 
+      Cadastro(),
     );
   }
 }
