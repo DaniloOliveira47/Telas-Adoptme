@@ -70,6 +70,77 @@ class Login extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+           Positioned(
+            top: 0,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 75,
+            left: 145,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/coracao.png")),
+          ),
+          Positioned(
+            top: 0,
+            right: 10,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 150,
+            right: 160,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 165,
+            right: 0,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 150,
+            left: 5,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            right: 160,
+            top: 770,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 700,
+            right: 10,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 690,
+            left: 5,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
           Padding(
             padding:
                 const EdgeInsets.only(top: 100, bottom: 100, left: 20, right: 20),
@@ -173,12 +244,16 @@ class Login extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Text(
-                            "Lupa Password?",
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 128, 96, 96),
-                              fontFamily: 'Baloo_Thambi_2',
-                              fontSize: 20,
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Cadastro()));
+                            },
+                            child: const Text(
+                              "Sign up",
+                              style: TextStyle(fontSize: 23),
                             ),
                           ),
                         ],

@@ -71,6 +71,77 @@ class Cadastro extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          Positioned(
+            top: 0,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 40,
+            left: 145,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/coracao.png")),
+          ),
+          Positioned(
+            top: 0,
+            right: 10,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 150,
+            right: 160,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 165,
+            right: 0,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 150,
+            left: 5,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            right: 160,
+            top: 770,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 700,
+            right: 10,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
+          Positioned(
+            top: 690,
+            left: 5,
+            child: Container(
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/Patas.png")),
+          ),
           Container(
             decoration: BoxDecoration(
               color: const Color.fromARGB(90, 220, 228, 241),

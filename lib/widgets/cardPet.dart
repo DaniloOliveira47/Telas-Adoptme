@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class cardPet extends StatelessWidget {
+class CardPet extends StatelessWidget {
   final String name;
   final String breed;
   final String imageUrl;
 
-  const cardPet({
+  const CardPet({
     Key? key,
     required this.name,
     required this.breed,
@@ -18,7 +18,8 @@ class cardPet extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: <BoxShadow>[
-          BoxShadow(color: Colors.grey, blurRadius: 4.0, offset: Offset(0.9, 2)),
+          BoxShadow(
+              color: Colors.grey, blurRadius: 4.0, offset: Offset(0.9, 2)),
         ],
         borderRadius: BorderRadius.circular(20),
       ),
@@ -26,6 +27,7 @@ class cardPet extends StatelessWidget {
       height: 200,
       child: Column(
         children: [
+          // Image Section
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
@@ -35,21 +37,30 @@ class cardPet extends StatelessWidget {
             width: 190,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Center(
-                    child: Icon(
-                      Icons.broken_image,
-                      size: 50,
-                      color: Colors.grey,
+              child: imageUrl.isNotEmpty
+                  ? Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Center(
+                          child: Icon(
+                            Icons.broken_image,
+                            size: 50,
+                            color: Colors.grey,
+                          ),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Icon(
+                        Icons.broken_image,
+                        size: 50,
+                        color: Colors.grey,
+                      ),
                     ),
-                  );
-                },
-              ),
             ),
           ),
+          // Text Section
           Padding(
             padding: const EdgeInsets.all(0.0),
             child: Row(
@@ -59,6 +70,7 @@ class cardPet extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Name
                       Text(
                         name,
                         style: const TextStyle(
@@ -66,6 +78,7 @@ class cardPet extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      // Breed
                       Text(
                         breed,
                         style: const TextStyle(
@@ -73,10 +86,12 @@ class cardPet extends StatelessWidget {
                           fontSize: 10,
                         ),
                       ),
+                      // Tags (Male, Adult)
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(
                           children: [
+                            // Male Tag
                             Container(
                               margin: const EdgeInsets.only(right: 10),
                               decoration: BoxDecoration(
@@ -95,6 +110,7 @@ class cardPet extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            // Adult Tag
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),

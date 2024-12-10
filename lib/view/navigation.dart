@@ -18,7 +18,7 @@ class _BottomNavigationBarExampleState extends State<ControleTelas> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     const Home(),
-    const Favoritos(),
+    const Mypets(),
     const CadastrarPet(),
     MessagesScreen(),
     const Usuarios()

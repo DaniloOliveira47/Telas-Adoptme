@@ -16,6 +16,9 @@ class _CadastrarPetState extends State<CadastrarPet> {
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _colorController = TextEditingController();
   final TextEditingController _imageController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _breedController = TextEditingController();
 
   Future<void> _registerPet() async {
     final String name = _nameController.text;
@@ -23,12 +26,18 @@ class _CadastrarPetState extends State<CadastrarPet> {
     final String weight = _weightController.text;
     final String color = _colorController.text;
     final String image = _imageController.text;
+    final String category = _categoryController.text;
+    final String gender = _genderController.text;
+    final String breed = _breedController.text;
 
     if (name.isEmpty ||
         age.isEmpty ||
         weight.isEmpty ||
         color.isEmpty ||
-        image.isEmpty) {
+        image.isEmpty ||
+        category.isEmpty ||
+        gender.isEmpty ||
+        breed.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Por favor, preencha todos os campos')),
       );
@@ -52,6 +61,9 @@ class _CadastrarPetState extends State<CadastrarPet> {
       'weight': weight,
       'color': color,
       'images': [image],
+      'category': category,
+      'gender': gender,
+      'breed': breed
     };
 
     final Uri url =
@@ -110,7 +122,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
             height: double.infinity,
             color: const Color.fromARGB(0, 243, 175, 175).withOpacity(0.9),
           ),
-           Positioned(
+          Positioned(
             top: 0,
             child: Image.asset(
               "assets/images/Patas.png",
@@ -118,7 +130,6 @@ class _CadastrarPetState extends State<CadastrarPet> {
               height: 100,
             ),
           ),
-          
           Positioned(
             top: 0,
             right: 10,
@@ -129,7 +140,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
             ),
           ),
           Positioned(
-            top: 150,
+            top: 40,
             right: 160,
             child: Image.asset(
               "assets/images/Patas.png",
@@ -199,7 +210,8 @@ class _CadastrarPetState extends State<CadastrarPet> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 80),
-                    child: Center(child: Image.asset("assets/images/Mypet.png")),
+                    child:
+                        Center(child: Image.asset("assets/images/Mypet.png")),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
@@ -279,6 +291,9 @@ class _CadastrarPetState extends State<CadastrarPet> {
       _buildTextField(_colorController, 'Color'),
       _buildTextField(_weightController, 'Weight'),
       _buildTextField(_imageController, 'Image URL'),
+      _buildTextField(_genderController, 'gender'),
+      _buildTextField(_categoryController, 'Category the pet'),
+      _buildTextField(_breedController, 'Breed'),
     ];
   }
 

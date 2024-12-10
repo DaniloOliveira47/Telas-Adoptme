@@ -12,6 +12,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          
           Column(
             children: [
               Container(
@@ -255,7 +256,7 @@ class Home extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                child: cardPet(
+                                child: CardPet(
                                   name: pet.name,
                                   breed: pet.color,
                                   imageUrl: pet.images.isNotEmpty
